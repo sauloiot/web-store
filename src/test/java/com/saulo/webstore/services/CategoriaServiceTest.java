@@ -39,11 +39,11 @@ class CategoriaServiceTest {
     CategoriaRepository categoriaRepository;
 
     @Test
-    public void find() {
+    public void findById() {
 
         when(categoriaRepository.findById(1)).thenReturn(java.util.Optional.of(new Categoria(1, "Informatica")));
 
-        Categoria emp = categoriaService.find(1);
+        Categoria emp = categoriaService.findById(1);
         assertEquals(1, emp.getId());
         assertEquals("Informatica", emp.getNome());
 
