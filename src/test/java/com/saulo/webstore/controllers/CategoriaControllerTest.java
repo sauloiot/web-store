@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,7 +34,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
-
 
 @WebMvcTest(CategoriaController.class)
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class })
@@ -77,7 +77,14 @@ class CategoriaControllerTest {
                 .get("/categorias/{id}", 1)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Informatica"));
+
 
     }
 

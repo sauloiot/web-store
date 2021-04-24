@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-
+@SpringBootTest
 class CategoriaServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+//        MockitoAnnotations.initMocks(this);
     }
 
     @AfterEach
@@ -72,7 +73,7 @@ class CategoriaServiceTest {
 
 
     @Test
-    public void save(){
+    public void insert(){
         Categoria categoria = new Categoria(1, "Informatica");
         categoriaService.insert(categoria);
         verify(categoriaRepository, times(1)).save(categoria);
