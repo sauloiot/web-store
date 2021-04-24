@@ -17,7 +17,7 @@ class CategoriaTest {
     }
 
     @Test
-    void testUser() {
+    void testModelCategoria() {
         Categoria user = new Categoria(1, "Informatica");
 
         assertThat(user)

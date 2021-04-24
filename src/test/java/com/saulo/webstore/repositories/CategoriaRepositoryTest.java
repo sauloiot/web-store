@@ -35,13 +35,13 @@ class CategoriaRepositoryTest {
     }
     @Test
     void testFindById(){
-        Optional<Categoria> accUser = repository.findById(1);
-        assertThat(accUser).isNotNull();
+        Optional<Categoria> categoria = repository.findById(1);
+        assertThat(categoria).isNotNull();
     }
     @Test
     void testFindAll(){
-        List<Categoria> accUser = repository.findAll();
-        assertThat(accUser).isNotNull();
+        List<Categoria> categoria = repository.findAll();
+        assertThat(categoria).isNotNull();
     }
     @Test
     void testDeleteById(){
