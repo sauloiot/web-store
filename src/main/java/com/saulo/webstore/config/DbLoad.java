@@ -1,8 +1,11 @@
 package com.saulo.webstore.config;
 
 import com.saulo.webstore.models.Categoria;
+import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.models.Produto;
+import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.CategoriaRepository;
+import com.saulo.webstore.repositories.ContaRepository;
 import com.saulo.webstore.repositories.ProdutoRepository;
 import com.saulo.webstore.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ public class DbLoad implements CommandLineRunner {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private ProdutoRepository produtoRepository;
+    @Autowired
+    private ContaRepository contaRepository;
 
 
     @Override
@@ -33,11 +38,15 @@ public class DbLoad implements CommandLineRunner {
         Produto produto3 = new Produto(null, "Mesa", 400.00, "Mesa grande", Utils.code5L7N(), cat2);
         Produto produto4 = new Produto(null, "Cadeira", 250.00, "Cadeira de rodinhas", Utils.code5L7N(), cat2);
 
+        Conta conta1 = new Conta(null, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN);
+        Conta conta2 = new Conta(null, "Cliente", "cliente@hotmail.com", "0123456", TipoConta.CLIENTE);
+
         cat1.getProdutos().addAll(Arrays.asList(produto1, produto2));
         cat2.getProdutos().addAll(Arrays.asList(produto3, produto4));
 
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(produto1,produto2,produto3,produto4));
+        contaRepository.saveAll(Arrays.asList(conta1,conta2));
 
 
 
