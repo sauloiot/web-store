@@ -18,6 +18,7 @@ public class Produto implements Serializable {
     private String descricao;
     private String codigo;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoria_id")
     private Categoria categoria;
