@@ -2,6 +2,7 @@ package com.saulo.webstore.services;
 
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.repositories.CategoriaRepository;
+import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,9 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     public Categoria findById(Integer id) {
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
-        return categoria.orElse(null);
+        Optional<Categoria> obj = categoriaRepository.findById(id);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getSimpleName()));
     }
 
     public List<Categoria> findAll(){
