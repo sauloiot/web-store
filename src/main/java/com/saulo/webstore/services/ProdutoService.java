@@ -1,8 +1,6 @@
 package com.saulo.webstore.services;
 
-import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Produto;
-import com.saulo.webstore.repositories.CategoriaRepository;
 import com.saulo.webstore.repositories.ProdutoRepository;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

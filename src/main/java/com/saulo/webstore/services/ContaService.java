@@ -2,7 +2,6 @@ package com.saulo.webstore.services;
 
 import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.repositories.ContaRepository;
-import com.saulo.webstore.repositories.ProdutoRepository;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,14 +25,14 @@ public class ContaService {
         return contaRepository.findAll();
     }
 
-    public Conta insert(Conta produto){
-        produto.setId(null);
-        return contaRepository.save(produto);
+    public Conta insert(Conta conta){
+        conta.setId(null);
+        return contaRepository.save(conta);
     }
 
-    public Conta update(Conta produto){
-        findById(produto.getId());
-        return contaRepository.save(produto);
+    public Conta update(Conta conta){
+        findById(conta.getId());
+        return contaRepository.save(conta);
     }
 
 //    public void deleteById(Integer category_id){
