@@ -2,11 +2,10 @@ package com.saulo.webstore.models;
 
 import com.saulo.webstore.models.enums.TipoConta;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +19,9 @@ public class Conta implements Serializable {
     private String email;
     private String senha;
     private Integer tipoConta;
+
+    @OneToMany(mappedBy = "conta")
+    private List<Pedido> pedidos = new ArrayList<>();
 
     public Conta() {
     }
@@ -70,6 +72,14 @@ public class Conta implements Serializable {
 
     public void setTipoConta(TipoConta tipoConta) {
         this.tipoConta = tipoConta.getCod();
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override

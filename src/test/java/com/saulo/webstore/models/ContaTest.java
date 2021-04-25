@@ -5,7 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ContaTest {
 
@@ -18,7 +17,7 @@ class ContaTest {
     }
 
     @Test
-    void testModelCategoria() {
+    void testModelConta() {
         Conta conta = new Conta(1, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN);
 
         assertThat(conta)
