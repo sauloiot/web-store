@@ -1,5 +1,6 @@
 package com.saulo.webstore.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String enderecoEntrega;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")

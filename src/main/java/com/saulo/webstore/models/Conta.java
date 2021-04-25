@@ -1,5 +1,6 @@
 package com.saulo.webstore.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.saulo.webstore.models.enums.TipoConta;
 
 import javax.persistence.*;
@@ -78,6 +79,7 @@ public class Conta implements Serializable {
         return pedidos;
     }
 
+    @JsonIgnore
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
