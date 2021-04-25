@@ -27,6 +27,8 @@ public class DbLoad implements CommandLineRunner {
     private PedidoRepository pedidoRepository;
     @Autowired
     private PagamentoRepository pagamentoRepository;
+    @Autowired
+    ItemPedidoRepository itemPedidoRepository;
 
 
 
@@ -65,9 +67,20 @@ public class DbLoad implements CommandLineRunner {
         pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
         pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
 
+        ItemPedido itemPedido1 = new ItemPedido(pedido1, produto1, 0.00, 3);
+        ItemPedido itemPedido2 = new ItemPedido(pedido1, produto2, 50.00, 10);
+        ItemPedido itemPedido3 = new ItemPedido(pedido2, produto3, 150.00, 6);
+        ItemPedido itemPedido4 = new ItemPedido(pedido2, produto4, 100.00, 10);
 
+        pedido1.getItens().addAll(Arrays.asList(itemPedido1,itemPedido2));
+        pedido2.getItens().addAll(Arrays.asList(itemPedido3,itemPedido4));
 
+        produto1.getItens().addAll(Arrays.asList(itemPedido1));
+        produto2.getItens().addAll(Arrays.asList(itemPedido2));
+        produto3.getItens().addAll(Arrays.asList(itemPedido3));
+        produto4.getItens().addAll(Arrays.asList(itemPedido4));
 
+        itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3, itemPedido4));
 
 
 
