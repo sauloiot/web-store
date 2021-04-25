@@ -1,18 +1,16 @@
 package com.saulo.webstore.config;
 
-import com.saulo.webstore.models.Categoria;
-import com.saulo.webstore.models.Conta;
-import com.saulo.webstore.models.Produto;
+import com.saulo.webstore.models.*;
+import com.saulo.webstore.models.enums.EstadoPagamento;
 import com.saulo.webstore.models.enums.TipoConta;
-import com.saulo.webstore.repositories.CategoriaRepository;
-import com.saulo.webstore.repositories.ContaRepository;
-import com.saulo.webstore.repositories.ProdutoRepository;
+import com.saulo.webstore.repositories.*;
 import com.saulo.webstore.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @Profile("test")
@@ -25,6 +23,11 @@ public class DbLoad implements CommandLineRunner {
     private ProdutoRepository produtoRepository;
     @Autowired
     private ContaRepository contaRepository;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
+
 
 
     @Override
@@ -47,6 +50,23 @@ public class DbLoad implements CommandLineRunner {
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(produto1,produto2,produto3,produto4));
         contaRepository.saveAll(Arrays.asList(conta1,conta2));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Pedido pedido1 = new Pedido(null, "minha casa", sdf.parse("25/04/2021 00:41"), conta1);
+        Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 6);
+        pedido1.setPagamento(pag1);
+        conta1.getPedidos().addAll(Arrays.asList(pedido1));
+
+        Pedido pedido2 = new Pedido(null, "minha casa", sdf.parse("24/04/2021 05:32"), conta2);
+        Pagamento pag2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, sdf.parse("23/04/2021 10:01"), null);
+        pedido2.setPagamento(pag2);
+        conta2.getPedidos().addAll(Arrays.asList(pedido2));
+
+        pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
+        pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
+
+
+
 
 
 
