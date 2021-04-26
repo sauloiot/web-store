@@ -1,7 +1,9 @@
 package com.saulo.webstore.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Conta;
+import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.models.Produto;
 import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.CategoriaRepository;
@@ -31,15 +33,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -61,6 +66,23 @@ class ProdutoControllerTest {
 
     @AfterEach
     void tearDown() {
+    }
+
+    @Test
+    void findAll() throws Exception {
+
+        Produto produto1 = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), null);
+        Produto produto2 = new Produto(2, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), null);
+
+        List<Produto> produtos = Arrays.asList(produto1, produto2);
+        given(produtoService.findAll()).willReturn(produtos);
+
+        // when + then
+
+        mockMvc.perform(get("/produtos")).andExpect(status().isOk())
+                .andExpect(content()
+                        .contentType(MediaType.APPLICATION_JSON));
+
     }
 
     @Test
@@ -86,6 +108,33 @@ class ProdutoControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.codigo").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.codigo").isNotEmpty());
 
+    }
+
+    @Test
+    public void insert() throws Exception{
+        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), null);
+        when(produtoService.insert(any())).thenReturn(produto);
+        mockMvc.perform(post("/produtos").
+                contentType(MediaType.APPLICATION_JSON).
+                content(asJsonString(produto))).
+                andExpect(status().isCreated());
+        verify(produtoService,times(1)).insert(any());
+    }
+
+    @Test
+    public void deleteById() throws Exception {
+        mockMvc.perform(delete("/produtos/{id}", 1))
+                .andExpect(status().isNoContent());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

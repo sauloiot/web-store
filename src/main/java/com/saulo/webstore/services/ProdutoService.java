@@ -1,9 +1,13 @@
 package com.saulo.webstore.services;
 
+import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Produto;
 import com.saulo.webstore.repositories.ProdutoRepository;
+import com.saulo.webstore.services.exceptions.DataIntegrityException;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
+import com.saulo.webstore.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,20 +31,27 @@ public class ProdutoService {
 
     public Produto insert(Produto produto){
         produto.setId(null);
+        produto.setCodigo(Utils.code5L7N());
         return produtoRepository.save(produto);
     }
 
     public Produto update(Produto produto){
         findById(produto.getId());
+        String cod = findById(produto.getId()).getCodigo();
+        if (produto.getCategoria() == null){
+            Categoria categoria = findById(produto.getId()).getCategoria();
+            produto.setCategoria(categoria);
+        }
+        produto.setCodigo(cod);
         return produtoRepository.save(produto);
     }
 
-//    public void deleteById(Integer category_id){
-//        findById(category_id);
-//        try {
-//            categoriaRepository.deleteById(category_id);
-//        }catch (DataIntegrityViolationException exception){
-//            throw new DataIntegrityException("+-=Custom Error=-+ Not is possible delete category with sub-categories");
-//        }
-//    }
+    public void deleteById(Integer id){
+        findById(id);
+        try {
+            produtoRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possível excluir este produto, ele está associado a pedidos!");
+        }
+    }
 }
