@@ -73,7 +73,7 @@ class PedidoServiceTest {
         assertEquals(3, empList.size());
         verify(pedidoRepository, times(1)).findAll();
     }
-    
+
     @Test
     public void insert() throws ParseException {
         Pedido categoria = new Pedido(1, "minha casa", sdf.parse("25/04/2021 00:41"), null);

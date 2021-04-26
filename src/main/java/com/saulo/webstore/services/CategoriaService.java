@@ -2,8 +2,10 @@ package com.saulo.webstore.services;
 
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.repositories.CategoriaRepository;
+import com.saulo.webstore.services.exceptions.DataIntegrityException;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,12 +37,12 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-//    public void deleteById(Integer category_id){
-//        findById(category_id);
-//        try {
-//            categoriaRepository.deleteById(category_id);
-//        }catch (DataIntegrityViolationException exception){
-//            throw new DataIntegrityException("+-=Custom Error=-+ Not is possible delete category with sub-categories");
-//        }
-//    }
+    public void deleteById(Integer id){
+        findById(id);
+        try {
+            categoriaRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos!");
+        }
+    }
 }
