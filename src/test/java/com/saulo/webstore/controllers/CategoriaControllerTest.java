@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.sun.org.apache.xml.internal.security.algorithms.implementations.SignatureDSA.URI;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
