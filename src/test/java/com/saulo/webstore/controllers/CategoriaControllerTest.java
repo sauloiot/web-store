@@ -1,5 +1,6 @@
 package com.saulo.webstore.controllers;
 
+import com.saulo.webstore.dtos.CategoriaDTO;
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.repositories.CategoriaRepository;
 import com.saulo.webstore.services.CategoriaService;
@@ -23,15 +24,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sun.org.apache.xml.internal.security.algorithms.implementations.SignatureDSA.URI;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -58,17 +62,20 @@ class CategoriaControllerTest {
     @Test
     void findAll() throws Exception {
 
-        mockMvc.perform( MockMvcRequestBuilders
-                .get("/categorias")
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*].nome").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*].nome").isNotEmpty());
+        Categoria categoria1 = new Categoria(1, "INFORMATICA");
+        Categoria categoria2 = new Categoria(2, "ESCRITORIO");
+
+        List<Categoria> departments = Arrays.asList(categoria1, categoria2);
+        given(categoriaService.findAll()).willReturn(departments);
+
+        // when + then
+
+        mockMvc.perform(get("/categorias")).andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\": 1, \"nome\": \"INFORMATICA\"}, {\"id\": 2, \"nome\": \"ESCRITORIO\"}]"));
 
     }
+
+
 
     @Test
     public void findById() throws Exception {
