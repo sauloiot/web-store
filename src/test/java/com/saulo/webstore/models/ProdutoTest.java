@@ -18,7 +18,7 @@ class ProdutoTest {
 
     @Test
     void testModelProduto() {
-        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), null);
+        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, null);
 
         assertThat(produto)
                 .isNotNull()

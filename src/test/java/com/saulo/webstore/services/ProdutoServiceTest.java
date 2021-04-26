@@ -44,7 +44,7 @@ class ProdutoServiceTest {
 
     @Test
     public void findById() {
-        when(produtoRepository.findById(1)).thenReturn(java.util.Optional.of(new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), null)));
+        when(produtoRepository.findById(1)).thenReturn(java.util.Optional.of(new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null)));
 
         Produto produto = produtoService.findById(1);
         assertEquals(1, produto.getId());
@@ -58,9 +58,9 @@ class ProdutoServiceTest {
     public void findAll()
     {
         List<Produto> list = new ArrayList<Produto>();
-        Produto prod1 = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), null);
-        Produto prod2 = new Produto(2, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), null);
-        Produto prod3 = new Produto(3, "Teclado", 200.00, "Teclado sem fio", Utils.code5L7N(), null);
+        Produto prod1 = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
+        Produto prod2 = new Produto(2, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, null);
+        Produto prod3 = new Produto(3, "Teclado", 200.00, "Teclado sem fio", Utils.code5L7N(), 0.00, null);
 
         list.add(prod1);
         list.add(prod2);
@@ -76,7 +76,7 @@ class ProdutoServiceTest {
 
     @Test
     public void insert(){
-        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), null);
+        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
         produtoService.insert(produto);
         verify(produtoRepository, times(1)).save(produto);
     }

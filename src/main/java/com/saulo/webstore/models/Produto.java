@@ -17,6 +17,7 @@ public class Produto implements Serializable {
     private Double preco;
     private String descricao;
     private String codigo;
+    private Double descontoPromocao;
 
     @JsonIgnore
     @ManyToOne
@@ -34,13 +35,15 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Integer id, String nome, Double preco, String descricao, String codigo, Categoria categoria) {
+
+    public Produto(Integer id, String nome, Double preco, String descricao, String codigo, Double descontoPromocao, Categoria categoria) {
         super();
         this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.descricao = descricao;
         this.codigo = codigo;
+        this.descontoPromocao = descontoPromocao;
         this.categoria = categoria;
     }
 
@@ -107,6 +110,14 @@ public class Produto implements Serializable {
 
     public void setItens(Set<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    public Double getDescontoPromocao() {
+        return descontoPromocao;
+    }
+
+    public void setDescontoPromocao(Double descontoPromocao) {
+        this.descontoPromocao = descontoPromocao;
     }
 
     @Override

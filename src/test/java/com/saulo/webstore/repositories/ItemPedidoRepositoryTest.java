@@ -36,7 +36,7 @@ class ItemPedidoRepositoryTest {
 
     @Test
     void testSave() throws ParseException {
-        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), null);
+        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, null);
         Pedido pedido = new Pedido(1, "minha casa", sdf.parse("25/04/2021 00:41"), null);
         ItemPedido itemPedido = new ItemPedido(pedido, produto, 50.00, 10);
         ItemPedido itemPedido1 = repository.save(itemPedido);
