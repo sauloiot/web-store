@@ -1,7 +1,9 @@
 package com.saulo.webstore.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Conta;
+import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.CategoriaRepository;
@@ -31,15 +33,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -70,6 +75,23 @@ class PedidoControllerTest {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     @Test
+    void findAll() throws Exception {
+
+        Pedido pedido1 = new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null);
+        Pedido pedido2 = new Pedido(2, "minha casa", sdf.parse("24/04/2021 05:32"), null);
+
+        List<Pedido> pedidos = Arrays.asList(pedido1, pedido2);
+        given(pedidoService.findAll()).willReturn(pedidos);
+
+        // when + then
+
+        mockMvc.perform(get("/pedidos")).andExpect(status().isOk())
+                .andExpect(content()
+                .contentType(MediaType.APPLICATION_JSON));
+
+    }
+
+    @Test
     public void findById() throws Exception {
 
         when(pedidoService.findById(1)).thenReturn(new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null));
@@ -88,6 +110,33 @@ class PedidoControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.instante").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.instante").isString());
 
+    }
+
+    @Test
+    public void insert() throws Exception{
+        Pedido pedido = new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null);
+        when(pedidoService.insert(any())).thenReturn(pedido);
+        mockMvc.perform(post("/pedidos").
+                contentType(MediaType.APPLICATION_JSON).
+                content(asJsonString(pedido))).
+                andExpect(status().isCreated());
+        verify(pedidoService,times(1)).insert(any());
+    }
+
+    @Test
+    public void deleteById() throws Exception {
+        mockMvc.perform(delete("/pedidos/{id}", 1))
+                .andExpect(status().isNoContent());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
