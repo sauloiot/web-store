@@ -1,5 +1,6 @@
 package com.saulo.webstore.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.models.enums.TipoConta;
@@ -27,15 +28,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -60,6 +64,22 @@ class ContaControllerTest {
     }
 
     @Test
+    void findAll() throws Exception {
+
+        Conta conta1 = new Conta(1, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN);
+        Conta conta2 = new Conta(2, "Cliente", "cliente@hotmail.com", "0123456", TipoConta.CLIENTE);
+
+        List<Conta> contas = Arrays.asList(conta1, conta2);
+        given(contaService.findAll()).willReturn(contas);
+
+        // when + then
+
+        mockMvc.perform(get("/contas")).andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\": 1, \"nome\": \"Administrador\", \"email\": \"adm@hotmail.com\", \"tipoConta\": \"ADMIN\"}, {\"id\": 2, \"nome\": \"Cliente\", \"email\": \"cliente@hotmail.com\", \"tipoConta\": \"CLIENTE\"}]"));
+
+    }
+
+    @Test
     public void findById() throws Exception {
         when(contaService.findById(1)).thenReturn(new Conta(1, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN));
         mockMvc.perform( MockMvcRequestBuilders
@@ -76,12 +96,38 @@ class ContaControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("adm@hotmail.com"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.senha").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.senha").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.senha").value("0123456"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoConta").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.tipoConta").isNotEmpty());
 
     }
+
+    @Test
+    public void insert() throws Exception{
+        Conta conta = new Conta(1, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN);
+        when(contaService.insert(any())).thenReturn(conta);
+        mockMvc.perform(post("/contas").
+                contentType(MediaType.APPLICATION_JSON).
+                content(asJsonString(conta))).
+                andExpect(status().isCreated());
+        verify(contaService,times(1)).insert(any());
+    }
+
+    @Test
+    public void deleteById() throws Exception {
+        mockMvc.perform(delete("/contas/{id}", 1))
+                .andExpect(status().isNoContent());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            final String jsonContent = mapper.writeValueAsString(obj);
+            return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 }
