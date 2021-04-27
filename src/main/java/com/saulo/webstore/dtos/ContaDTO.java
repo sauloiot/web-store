@@ -2,11 +2,14 @@ package com.saulo.webstore.dtos;
 
 import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.models.enums.TipoConta;
+import com.saulo.webstore.services.validation.ContaInsert;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+@ContaInsert
 public class ContaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -15,7 +18,7 @@ public class ContaDTO implements Serializable {
     @Length(min = 2, max = 150, message = "O tamanho deve ser entre 2 e 150 caracteres")
     private String nome;
     @NotEmpty(message = "Preenchimento obrigatorio")
-    @Length(min = 10, max = 150, message = "O tamanho deve ser entre 2 e 150 caracteres")
+    @Email(message = "Email invalido")
     private String email;
     @NotEmpty(message = "Preenchimento obrigatorio")
     @Length(min = 5, max = 150, message = "O tamanho deve ser entre 2 e 150 caracteres")
