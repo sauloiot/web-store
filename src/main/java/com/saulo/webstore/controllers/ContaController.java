@@ -1,8 +1,10 @@
 package com.saulo.webstore.controllers;
 
 import com.saulo.webstore.dtos.CategoriaDTO;
+import com.saulo.webstore.dtos.ContaDTO;
 import com.saulo.webstore.dtos.ContaNoPWDTO;
 import com.saulo.webstore.dtos.converter.CategoriaDTOConverter;
+import com.saulo.webstore.dtos.converter.ContaDTOConverter;
 import com.saulo.webstore.dtos.converter.ContaNoPWDTOConverter;
 import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.models.Conta;
@@ -34,7 +36,8 @@ public class ContaController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody Conta obj){
+    public ResponseEntity<Void> insert(@Valid @RequestBody ContaDTO dto){
+        Conta obj = ContaDTOConverter.dtoToEntity(dto);
         obj = contaService.insert(obj);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

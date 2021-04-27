@@ -1,6 +1,7 @@
 package com.saulo.webstore.services;
 
 import com.saulo.webstore.models.Conta;
+import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.ContaRepository;
 import com.saulo.webstore.services.exceptions.DataIntegrityException;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
@@ -33,7 +34,12 @@ public class ContaService {
     }
 
     public Conta update(Conta conta){
-        findById(conta.getId());
+        Conta baseConta = findById(conta.getId());
+        conta.setNome((conta.getNome() != null) ? conta.getNome() : baseConta.getNome());
+        conta.setEmail((conta.getEmail() != null) ? conta.getEmail() : baseConta.getEmail());
+        conta.setSenha((conta.getSenha() != null) ? conta.getSenha() : baseConta.getSenha());
+        conta.setTipoConta((conta.getTipoConta() != null) ? conta.getTipoConta() : baseConta.getTipoConta());
+
         return contaRepository.save(conta);
     }
 
