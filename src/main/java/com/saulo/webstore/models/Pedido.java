@@ -41,6 +41,21 @@ public class Pedido implements Serializable {
         this.conta = conta;
     }
 
+    public Double getValorTotal(){
+        double soma = 0.0;
+        for(ItemPedido ip : itens){
+            soma = soma + ip.getSubTotal();
+        }
+        return soma;
+    }
+    public Double getValorTotalAVista10PorcDesc(){
+        double soma = 0.0;
+        for(ItemPedido ip : itens){
+            soma = soma + ip.getSubTotal();
+        }
+        return soma * 0.9;
+    }
+
     public Integer getId() {
         return id;
     }

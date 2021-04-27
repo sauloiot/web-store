@@ -38,9 +38,9 @@ public class DbLoad implements CommandLineRunner {
         Categoria cat1 = new Categoria(null, "INFORMATICA");
         Categoria cat2 = new Categoria(null, "ESCRITORIO");
 
-        Produto produto1 = new Produto(null, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, cat1);
+        Produto produto1 = new Produto(null, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 25.00, cat1);
         Produto produto2 = new Produto(null, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, cat1);
-        Produto produto3 = new Produto(null, "Mesa", 400.00, "Mesa grande", Utils.code5L7N(), 0.00, cat2);
+        Produto produto3 = new Produto(null, "Mesa", 400.00, "Mesa grande", Utils.code5L7N(), 50.00, cat2);
         Produto produto4 = new Produto(null, "Cadeira", 250.00, "Cadeira de rodinhas", Utils.code5L7N(), 0.00, cat2);
 
         Conta conta1 = new Conta(null, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN);
