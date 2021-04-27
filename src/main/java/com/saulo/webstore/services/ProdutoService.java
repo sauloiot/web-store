@@ -36,13 +36,14 @@ public class ProdutoService {
     }
 
     public Produto update(Produto produto){
-        findById(produto.getId());
-        String cod = findById(produto.getId()).getCodigo();
-        if (produto.getCategoria() == null){
-            Categoria categoria = findById(produto.getId()).getCategoria();
-            produto.setCategoria(categoria);
-        }
-        produto.setCodigo(cod);
+        Produto baseProd = findById(produto.getId());
+        produto.setCodigo(baseProd.getCodigo());
+        produto.setNome((produto.getNome() != null) ? produto.getNome() : baseProd.getNome());
+        produto.setPreco((produto.getPreco() != null) ? produto.getPreco() : baseProd.getPreco());
+        produto.setDescricao((produto.getDescricao() != null) ? produto.getDescricao() : baseProd.getDescricao());
+        produto.setDescontoPromocao((produto.getDescontoPromocao() != null) ? produto.getDescontoPromocao() : baseProd.getDescontoPromocao());
+        produto.setCategoria((produto.getCategoria().getId() != null) ? produto.getCategoria() : baseProd.getCategoria());
+
         return produtoRepository.save(produto);
     }
 

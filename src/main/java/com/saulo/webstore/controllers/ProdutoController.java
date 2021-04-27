@@ -1,11 +1,14 @@
 package com.saulo.webstore.controllers;
 
+import com.saulo.webstore.dtos.ProdutoInsertDTO;
+import com.saulo.webstore.dtos.converter.ProdutoInsertDTOConverter;
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.models.Produto;
 import com.saulo.webstore.services.CategoriaService;
 import com.saulo.webstore.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,13 +31,17 @@ public class ProdutoController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody Produto obj){
-        obj = produtoService.insert(obj);
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> insert(@RequestBody ProdutoInsertDTO dto){
+
+        Produto produto = ProdutoInsertDTOConverter.dtoToEntity(dto);
+        produto = produtoService.insert(produto);
+
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(obj.getId())
+                .buildAndExpand(produto.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
@@ -47,7 +54,8 @@ public class ProdutoController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@Valid @RequestBody Produto obj, @PathVariable Integer id ){
+    public ResponseEntity<Void> update(@Valid @RequestBody ProdutoInsertDTO dto, @PathVariable Integer id ){
+        Produto obj = ProdutoInsertDTOConverter.dtoToEntity(dto);
         obj.setId(id);
         obj = produtoService.update(obj);
         return ResponseEntity.noContent().build();
