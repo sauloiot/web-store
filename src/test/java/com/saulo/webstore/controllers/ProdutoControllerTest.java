@@ -86,31 +86,6 @@ class ProdutoControllerTest {
     }
 
     @Test
-    public void findById() throws Exception {
-        when(produtoService.findById(1)).thenReturn(new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null));
-        mockMvc.perform( MockMvcRequestBuilders
-                .get("/produtos/{id}", 1)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Impressora"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.preco").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.preco").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.preco").value(300.00))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descricao").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descricao").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descricao").value("Impressora laser"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.codigo").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.codigo").isNotEmpty());
-
-    }
-
-    @Test
     public void insert() throws Exception{
         Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
         when(produtoService.insert(any())).thenReturn(produto);

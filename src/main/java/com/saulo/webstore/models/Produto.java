@@ -19,7 +19,7 @@ public class Produto implements Serializable {
     private String codigo;
     private Double descontoPromocao;
 
-//    @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoria_id")
     private Categoria categoria = new Categoria();

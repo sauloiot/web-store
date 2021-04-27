@@ -11,9 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -32,6 +30,7 @@ public class CategoriaController {
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<Categoria> findById(@PathVariable Integer id) {
         Categoria obj = categoriaService.findById(id);
+
         return ResponseEntity.ok().body(obj);
     }
 

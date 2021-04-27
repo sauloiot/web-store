@@ -1,6 +1,8 @@
 package com.saulo.webstore.controllers;
 
+import com.saulo.webstore.dtos.ProdutoDTO;
 import com.saulo.webstore.dtos.ProdutoInsertDTO;
+import com.saulo.webstore.dtos.converter.ProdutoDTOConverter;
 import com.saulo.webstore.dtos.converter.ProdutoInsertDTOConverter;
 import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Pedido;
@@ -26,9 +28,10 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
-    public ResponseEntity<Produto> findById(@PathVariable Integer id) {
+    public ResponseEntity<ProdutoDTO> findById(@PathVariable Integer id) {
         Produto obj = produtoService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        ProdutoDTO dto = ProdutoDTOConverter.entityToDTO(obj);
+        return ResponseEntity.ok().body(dto);
     }
 
 
