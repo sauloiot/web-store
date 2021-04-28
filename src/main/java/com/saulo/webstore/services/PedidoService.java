@@ -1,8 +1,6 @@
 package com.saulo.webstore.services;
 
-import com.saulo.webstore.models.ItemPedido;
-import com.saulo.webstore.models.PagamentoComBoleto;
-import com.saulo.webstore.models.Pedido;
+import com.saulo.webstore.models.*;
 import com.saulo.webstore.models.enums.EstadoPagamento;
 import com.saulo.webstore.repositories.ItemPedidoRepository;
 import com.saulo.webstore.repositories.PagamentoRepository;
@@ -30,6 +28,8 @@ public class PedidoService {
     private ProdutoService produtoService;
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+    @Autowired
+    private CupomService cupomService;
 
     public Pedido findById(Integer id) {
         Optional<Pedido> obj = pedidoRepository.findById(id);
@@ -50,6 +50,30 @@ public class PedidoService {
             PagamentoComBoleto pagamentoComBoleto = (PagamentoComBoleto) pedido.getPagamento();
             boletoService.preencherPagamentoComBoleto(pagamentoComBoleto, pedido.getInstante());
         }
+        Double valorTotal = 0.0;
+        for (ItemPedido ip : pedido.getItens()){
+            Produto produto = produtoService.findById(ip.getProduto().getId());
+            Integer quantidade = ip.getQuantidade();
+            Double preco = produto.getPreco();
+            Double desconto = produto.getDescontoPromocao();
+            valorTotal = valorTotal + ((preco - desconto) * quantidade);
+        }
+        pedido.setValorTotal(valorTotal);
+        if (pedido.getCupom() != null){
+            Cupom cupom = cupomService.findByCodigo(pedido.getCupom());
+            if (cupom.getTipo() == 1){
+                Double valorComCupom = valorTotal * (1-(cupom.getDesconto()/100));
+                pedido.setValorComCupom(valorComCupom);
+            }else {
+                Double valorComCupom = valorTotal - cupom.getDesconto();
+                pedido.setValorComCupom(valorComCupom);
+            }
+        }else {
+            pedido.setValorComCupom(valorTotal);
+            pedido.setCupom("Cupom não inserido.");
+        }
+        pedido.setValorTotalAVista10PorcDesc(pedido.getValorComCupom() * 0.9);
+
         pedido = pedidoRepository.save(pedido);
         pagamentoRepository.save(pedido.getPagamento());
         for (ItemPedido ip : pedido.getItens()){
@@ -68,8 +92,9 @@ public class PedidoService {
 //    }
 
     public Pedido update(Pedido pedido){
-        findById(pedido.getId());
-        return pedidoRepository.save(pedido);
+        Pedido newObj = findById(pedido.getId());
+        updateData(newObj, pedido);
+        return pedidoRepository.save(newObj);
     }
 
     public void deleteById(Integer id){
@@ -77,7 +102,11 @@ public class PedidoService {
         try {
             pedidoRepository.deleteById(id);
         }catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Não é possível excluir este pedido");
+            throw new DataIntegrityException("Não é possível excluir um pedido que possui pagamento e itens !");
         }
+    }
+
+    public void updateData(Pedido newObj, Pedido pedido){
+        newObj.setEnderecoEntrega(pedido.getEnderecoEntrega());
     }
 }

@@ -1,6 +1,5 @@
 package com.saulo.webstore.services;
 
-import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Produto;
 import com.saulo.webstore.repositories.ProdutoRepository;
 import com.saulo.webstore.services.exceptions.DataIntegrityException;

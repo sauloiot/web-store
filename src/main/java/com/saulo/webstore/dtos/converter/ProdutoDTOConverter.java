@@ -1,7 +1,6 @@
 package com.saulo.webstore.dtos.converter;
 
 import com.saulo.webstore.dtos.ProdutoDTO;
-import com.saulo.webstore.dtos.ProdutoDTO;
 import com.saulo.webstore.models.Produto;
 
 import java.util.List;

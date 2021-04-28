@@ -1,9 +1,5 @@
 package com.saulo.webstore.controllers;
 
-import com.saulo.webstore.dtos.CategoriaDTO;
-import com.saulo.webstore.dtos.converter.CategoriaDTOConverter;
-import com.saulo.webstore.models.Categoria;
-import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +34,6 @@ public class PedidoController {
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
-
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
-//        obj = pedidoService.insert(obj);
-//        URI uri = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(obj.getId())
-//                .toUri();
-//        return ResponseEntity.created(uri).build();
-//    }
 
     @RequestMapping( method=RequestMethod.GET)
     public ResponseEntity<List<Pedido>> findAll() {

@@ -1,14 +1,10 @@
 package com.saulo.webstore.controllers;
 
-import com.saulo.webstore.dtos.CategoriaDTO;
 import com.saulo.webstore.dtos.ContaDTO;
 import com.saulo.webstore.dtos.ContaNoPWDTO;
-import com.saulo.webstore.dtos.converter.CategoriaDTOConverter;
 import com.saulo.webstore.dtos.converter.ContaDTOConverter;
 import com.saulo.webstore.dtos.converter.ContaNoPWDTOConverter;
 import com.saulo.webstore.models.Conta;
-import com.saulo.webstore.models.Conta;
-import com.saulo.webstore.services.CategoriaService;
 import com.saulo.webstore.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

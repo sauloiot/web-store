@@ -1,7 +1,6 @@
 package com.saulo.webstore.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +19,10 @@ public class Pedido implements Serializable {
     private String enderecoEntrega;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
+    private Double valorTotal;
+    private String cupom;
+    private Double valorComCupom;
+    private Double valorTotalAVista10PorcDesc;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
@@ -41,19 +44,24 @@ public class Pedido implements Serializable {
         this.conta = conta;
     }
 
-    public Double getValorTotal(){
-        double soma = 0.0;
-        for(ItemPedido ip : itens){
-            soma = soma + ip.getSubTotal();
-        }
-        return soma;
+    public Pedido(Integer id, String enderecoEntrega, Date instante, String cupom, Conta conta) {
+        this.id = id;
+        this.enderecoEntrega = enderecoEntrega;
+        this.instante = instante;
+        this.cupom = cupom;
+        this.conta = conta;
     }
-    public Double getValorTotalAVista10PorcDesc(){
-        double soma = 0.0;
-        for(ItemPedido ip : itens){
-            soma = soma + ip.getSubTotal();
-        }
-        return soma * 0.9;
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public Double getValorTotalAVista10PorcDesc() {
+        return valorTotalAVista10PorcDesc;
+    }
+
+    public void setValorTotalAVista10PorcDesc(Double valorTotalAVista10PorcDesc) {
+        this.valorTotalAVista10PorcDesc = valorTotalAVista10PorcDesc;
     }
 
     public Integer getId() {
@@ -78,6 +86,26 @@ public class Pedido implements Serializable {
 
     public void setInstante(Date instante) {
         this.instante = instante;
+    }
+
+    public String getCupom() {
+        return cupom;
+    }
+
+    public void setCupom(String cupom) {
+        this.cupom = cupom;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Double getValorComCupom() {
+        return valorComCupom;
+    }
+
+    public void setValorComCupom(Double valorComCupom) {
+        this.valorComCupom = valorComCupom;
     }
 
     public Pagamento getPagamento() {

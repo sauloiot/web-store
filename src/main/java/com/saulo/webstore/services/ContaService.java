@@ -1,7 +1,6 @@
 package com.saulo.webstore.services;
 
 import com.saulo.webstore.models.Conta;
-import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.ContaRepository;
 import com.saulo.webstore.services.exceptions.DataIntegrityException;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;

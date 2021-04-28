@@ -74,60 +74,60 @@ class PedidoControllerTest {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    @Test
-    void findAll() throws Exception {
-
-        Pedido pedido1 = new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null);
-        Pedido pedido2 = new Pedido(2, "minha casa", sdf.parse("24/04/2021 05:32"), null);
-
-        List<Pedido> pedidos = Arrays.asList(pedido1, pedido2);
-        given(pedidoService.findAll()).willReturn(pedidos);
-
-        // when + then
-
-        mockMvc.perform(get("/pedidos")).andExpect(status().isOk())
-                .andExpect(content()
-                .contentType(MediaType.APPLICATION_JSON));
-
-    }
-
-    @Test
-    public void findById() throws Exception {
-
-        when(pedidoService.findById(1)).thenReturn(new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null));
-        mockMvc.perform( MockMvcRequestBuilders
-                .get("/pedidos/{id}", 1)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.enderecoEntrega").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.enderecoEntrega").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.enderecoEntrega").value("minha casa"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.instante").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.instante").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.instante").isString());
-
-    }
-
-    @Test
-    public void insert() throws Exception{
-        Pedido pedido = new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null);
-        when(pedidoService.insert(any())).thenReturn(pedido);
-        mockMvc.perform(post("/pedidos").
-                contentType(MediaType.APPLICATION_JSON).
-                content(asJsonString(pedido))).
-                andExpect(status().isCreated());
-        verify(pedidoService,times(1)).insert(any());
-    }
-
-    @Test
-    public void deleteById() throws Exception {
-        mockMvc.perform(delete("/pedidos/{id}", 1))
-                .andExpect(status().isNoContent());
-    }
+//    @Test
+//    void findAll() throws Exception {
+//
+//        Pedido pedido1 = new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null);
+//        Pedido pedido2 = new Pedido(2, "minha casa", sdf.parse("24/04/2021 05:32"), null);
+//
+//        List<Pedido> pedidos = Arrays.asList(pedido1, pedido2);
+//        given(pedidoService.findAll()).willReturn(pedidos);
+//
+//        // when + then
+//
+//        mockMvc.perform(get("/pedidos")).andExpect(status().isOk())
+//                .andExpect(content()
+//                .contentType(MediaType.APPLICATION_JSON));
+//
+//    }
+//
+//    @Test
+//    public void findById() throws Exception {
+//
+//        when(pedidoService.findById(1)).thenReturn(new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null));
+//        mockMvc.perform( MockMvcRequestBuilders
+//                .get("/pedidos/{id}", 1)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.enderecoEntrega").exists())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.enderecoEntrega").isNotEmpty())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.enderecoEntrega").value("minha casa"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.instante").exists())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.instante").isNotEmpty())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.instante").isString());
+//
+//    }
+//
+//    @Test
+//    public void insert() throws Exception{
+//        Pedido pedido = new Pedido(1, "minha casa", sdf.parse("24/04/2021 05:32"), null);
+//        when(pedidoService.insert(any())).thenReturn(pedido);
+//        mockMvc.perform(post("/pedidos").
+//                contentType(MediaType.APPLICATION_JSON).
+//                content(asJsonString(pedido))).
+//                andExpect(status().isCreated());
+//        verify(pedidoService,times(1)).insert(any());
+//    }
+//
+//    @Test
+//    public void deleteById() throws Exception {
+//        mockMvc.perform(delete("/pedidos/{id}", 1))
+//                .andExpect(status().isNoContent());
+//    }
 
     public static String asJsonString(final Object obj) {
         try {

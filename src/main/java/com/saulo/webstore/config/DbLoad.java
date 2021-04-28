@@ -29,6 +29,8 @@ public class DbLoad implements CommandLineRunner {
     private PagamentoRepository pagamentoRepository;
     @Autowired
     ItemPedidoRepository itemPedidoRepository;
+    @Autowired
+    CupomRepository cupomRepository;
 
 
 
@@ -64,8 +66,8 @@ public class DbLoad implements CommandLineRunner {
         pedido2.setPagamento(pag2);
         conta2.getPedidos().addAll(Arrays.asList(pedido2));
 
-        pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
-        pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
+//        pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
+//        pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
 
         ItemPedido itemPedido1 = new ItemPedido(pedido1, produto1, 0.00, 3);
         ItemPedido itemPedido2 = new ItemPedido(pedido1, produto2, 50.00, 10);
@@ -80,7 +82,15 @@ public class DbLoad implements CommandLineRunner {
         produto3.getItens().addAll(Arrays.asList(itemPedido3));
         produto4.getItens().addAll(Arrays.asList(itemPedido4));
 
-        itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3, itemPedido4));
+//        itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3, itemPedido4));
+
+        Cupom cupom = new Cupom(null, "ABC1", 10.0, 1);
+        Cupom cupom1 = new Cupom(null, "ABC2", 150.0, 2);
+        Cupom cupom2 = new Cupom(null, "ABC3", 90.0, 1);
+
+        cupomRepository.saveAll(Arrays.asList(cupom, cupom1, cupom2));
+
+
 
 
 

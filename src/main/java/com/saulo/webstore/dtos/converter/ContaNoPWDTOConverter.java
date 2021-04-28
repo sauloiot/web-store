@@ -1,8 +1,6 @@
 package com.saulo.webstore.dtos.converter;
 
-import com.saulo.webstore.dtos.CategoriaDTO;
 import com.saulo.webstore.dtos.ContaNoPWDTO;
-import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Conta;
 
 import java.util.List;

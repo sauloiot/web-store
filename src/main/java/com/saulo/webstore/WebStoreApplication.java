@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-//@SpringBootApplication
+@SpringBootApplication
 @EnableWebSecurity
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
+//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class WebStoreApplication {
 
     public static void main(String[] args) {

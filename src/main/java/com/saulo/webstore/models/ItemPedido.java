@@ -33,7 +33,7 @@ public class ItemPedido implements Serializable {
 
 
     public double getSubTotal(){
-        return ((getProduto().getPreco() - getProduto().getDescontoPromocao()) * quantidade);
+        return ((getProduto().getPreco()) * quantidade) - desconto;
     }
 
     @JsonIgnore
