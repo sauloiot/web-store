@@ -1,5 +1,8 @@
 package com.saulo.webstore.controllers;
 
+import com.saulo.webstore.dtos.CategoriaDTO;
+import com.saulo.webstore.dtos.converter.CategoriaDTOConverter;
+import com.saulo.webstore.models.Categoria;
 import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.models.Pedido;
 import com.saulo.webstore.services.PedidoService;
@@ -26,15 +29,26 @@ public class PedidoController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
-        obj = pedidoService.insert(obj);
+    public ResponseEntity<Void> insert(@Valid @RequestBody Pedido pedido){
+        pedido = pedidoService.insert(pedido);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(obj.getId())
+                .buildAndExpand(pedido.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
+
+//    @RequestMapping(method = RequestMethod.POST)
+//    public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
+//        obj = pedidoService.insert(obj);
+//        URI uri = ServletUriComponentsBuilder
+//                .fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(obj.getId())
+//                .toUri();
+//        return ResponseEntity.created(uri).build();
+//    }
 
     @RequestMapping( method=RequestMethod.GET)
     public ResponseEntity<List<Pedido>> findAll() {
