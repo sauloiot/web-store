@@ -18,6 +18,7 @@ public class Produto implements Serializable {
     private String descricao;
     private String codigo;
     private Double descontoPromocao;
+    private String imagemURL;
 
     @JsonIgnore
     @ManyToOne
@@ -28,15 +29,16 @@ public class Produto implements Serializable {
     @OneToMany(mappedBy = "id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
 
-//    cria Imagem para futura implementação
+
+//lista de imagens para futura implementação
 //    @OneToMany(mappedBy="produto")
-//    private Imagem imagem;
+//    private List<Imagens> imagens = new ArrayList<>();
 
     public Produto() {
     }
 
 
-    public Produto(Integer id, String nome, Double preco, String descricao, String codigo, Double descontoPromocao, Categoria categoria) {
+    public Produto(Integer id, String nome, Double preco, String descricao, String codigo, Double descontoPromocao,String imagemURL, Categoria categoria) {
         super();
         this.id = id;
         this.nome = nome;
@@ -44,6 +46,7 @@ public class Produto implements Serializable {
         this.descricao = descricao;
         this.codigo = codigo;
         this.descontoPromocao = descontoPromocao;
+        this.imagemURL = imagemURL;
         this.categoria = categoria;
     }
 
@@ -118,6 +121,14 @@ public class Produto implements Serializable {
 
     public void setDescontoPromocao(Double descontoPromocao) {
         this.descontoPromocao = descontoPromocao;
+    }
+
+    public String getImagemURL() {
+        return imagemURL;
+    }
+
+    public void setImagemURL(String imagemURL) {
+        this.imagemURL = imagemURL;
     }
 
     @Override

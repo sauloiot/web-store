@@ -14,6 +14,7 @@ public class ProdutoInsertDTOConverter {
         dto.setPreco(produto.getPreco());
         dto.setDescricao(produto.getDescricao());
         dto.setDescontoPromocao(produto.getDescontoPromocao());
+        dto.setImagemURL(produto.getImagemURL());
         dto.setIdCategoria(produto.getCategoria().getId());
 
         return dto;
@@ -31,6 +32,7 @@ public class ProdutoInsertDTOConverter {
         entity.setPreco(dto.getPreco());
         entity.setDescricao(dto.getDescricao());
         entity.setDescontoPromocao(dto.getDescontoPromocao());
+        entity.setImagemURL(dto.getImagemURL());
         entity.getCategoria().setId(dto.getIdCategoria());
 
         return entity;

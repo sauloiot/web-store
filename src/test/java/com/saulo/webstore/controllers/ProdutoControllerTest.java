@@ -71,8 +71,8 @@ class ProdutoControllerTest {
     @Test
     void findAll() throws Exception {
 
-        Produto produto1 = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
-        Produto produto2 = new Produto(2, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
+        Produto produto1 = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, "imagemURL", null);
+        Produto produto2 = new Produto(2, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, "imagemURL", null);
 
         List<Produto> produtos = Arrays.asList(produto1, produto2);
         given(produtoService.findAll()).willReturn(produtos);
@@ -87,7 +87,7 @@ class ProdutoControllerTest {
 
     @Test
     public void insert() throws Exception{
-        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
+        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, "imagemURL", null);
         when(produtoService.insert(any())).thenReturn(produto);
         mockMvc.perform(post("/produtos").
                 contentType(MediaType.APPLICATION_JSON).

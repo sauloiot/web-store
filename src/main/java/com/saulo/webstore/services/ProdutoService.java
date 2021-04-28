@@ -42,7 +42,7 @@ public class ProdutoService {
         produto.setDescricao((produto.getDescricao() != null) ? produto.getDescricao() : baseProd.getDescricao());
         produto.setDescontoPromocao((produto.getDescontoPromocao() != null) ? produto.getDescontoPromocao() : baseProd.getDescontoPromocao());
         produto.setCategoria((produto.getCategoria().getId() != null) ? produto.getCategoria() : baseProd.getCategoria());
-
+        produto.setImagemURL((produto.getImagemURL() != null) ? produto.getImagemURL() : baseProd.getImagemURL());
         return produtoRepository.save(produto);
     }
 

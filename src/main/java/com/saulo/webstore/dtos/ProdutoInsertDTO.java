@@ -12,6 +12,7 @@ public class ProdutoInsertDTO implements Serializable {
     private Double preco;
     private String descricao;
     private Double descontoPromocao;
+    private String imagemURL;
     private Integer idCategoria;
 
     public ProdutoInsertDTO() {
@@ -24,6 +25,7 @@ public class ProdutoInsertDTO implements Serializable {
         preco = produto.getPreco();
         descricao = produto.getDescricao();
         descontoPromocao = produto.getDescontoPromocao();
+        imagemURL = produto.getImagemURL();
         idCategoria = produto.getCategoria().getId();
 
     }
@@ -66,6 +68,14 @@ public class ProdutoInsertDTO implements Serializable {
 
     public void setDescontoPromocao(Double descontoPromocao) {
         this.descontoPromocao = descontoPromocao;
+    }
+
+    public String getImagemURL() {
+        return imagemURL;
+    }
+
+    public void setImagemURL(String imagemURL) {
+        this.imagemURL = imagemURL;
     }
 
     public Integer getIdCategoria() {

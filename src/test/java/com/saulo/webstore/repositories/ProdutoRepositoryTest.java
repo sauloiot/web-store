@@ -30,7 +30,7 @@ class ProdutoRepositoryTest {
     private ProdutoRepository repository;
     @Test
     void testSave() {
-        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, null);
+        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, "imagemURL", null);
         Produto produto1 = repository.save(produto);
         assertThat(produto1).isNotNull();
     }
@@ -46,7 +46,7 @@ class ProdutoRepositoryTest {
     }
     @Test
     void testDeleteById(){
-        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, null);
+        Produto produto = new Produto(1, "Mouse", 100.00, "Mouse sem fio", Utils.code5L7N(), 0.00, "imagemURL", null);
         Produto produto1 = repository.save(produto);
         repository.deleteById(produto1.getId());
     }

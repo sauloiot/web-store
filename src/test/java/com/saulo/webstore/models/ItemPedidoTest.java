@@ -24,7 +24,7 @@ class ItemPedidoTest {
 
     @Test
     void testModelConta() throws ParseException {
-        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00, null);
+        Produto produto = new Produto(1, "Impressora", 300.00, "Impressora laser", Utils.code5L7N(), 0.00,"imagemURL", null);
         Pedido pedido = new Pedido(1, "minha casa", sdf.parse("25/04/2021 00:41"), null);
 
         ItemPedidoPK itemPedidoPK = new ItemPedidoPK();

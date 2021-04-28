@@ -13,6 +13,7 @@ public class ProdutoDTO implements Serializable {
     private Double preco;
     private String descricao;
     private Double descontoPromocao;
+    private String imagemURL;
     private CategoriaDTO categoria;
 
     public ProdutoDTO() {
@@ -25,6 +26,7 @@ public class ProdutoDTO implements Serializable {
         preco = produto.getPreco();
         descricao = produto.getDescricao();
         descontoPromocao = produto.getDescontoPromocao();
+        imagemURL = produto.getImagemURL();
         categoria = CategoriaDTOConverter.entityToDTO(produto.getCategoria());
 
     }
@@ -67,6 +69,14 @@ public class ProdutoDTO implements Serializable {
 
     public void setDescontoPromocao(Double descontoPromocao) {
         this.descontoPromocao = descontoPromocao;
+    }
+
+    public String getImagemURL() {
+        return imagemURL;
+    }
+
+    public void setImagemURL(String imagemURL) {
+        this.imagemURL = imagemURL;
     }
 
     public CategoriaDTO getCategoria() {

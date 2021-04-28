@@ -14,6 +14,7 @@ public class ProdutoDTOConverter {
         dto.setPreco(produto.getPreco());
         dto.setDescricao(produto.getDescricao());
         dto.setDescontoPromocao(produto.getDescontoPromocao());
+        dto.setImagemURL(produto.getImagemURL());
         dto.setCategoria(CategoriaDTOConverter.entityToDTO(produto.getCategoria()));
 
         return dto;
@@ -31,6 +32,7 @@ public class ProdutoDTOConverter {
         entity.setPreco(dto.getPreco());
         entity.setDescricao(dto.getDescricao());
         entity.setDescontoPromocao(dto.getDescontoPromocao());
+        entity.setImagemURL(dto.getImagemURL());
         entity.setCategoria(CategoriaDTOConverter.dtoToEntity(dto.getCategoria()));
 
         return entity;
