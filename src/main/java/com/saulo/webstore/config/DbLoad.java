@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Profile;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-@Profile("test")
+@Profile({"test", "dev"})
 @Configuration
 public class DbLoad implements CommandLineRunner {
 
