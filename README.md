@@ -77,6 +77,18 @@ spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=false
 spring.jpa.properties.hibernate.format_sql=false
 ```
+### Variáveis
+É possivel alterar a duração do token que por padrão foi definido para expirar em 1h, o segredo do jwt secret e a porta da api no arquivo:
+ ```sh
+application.properties
+```
+e alterar as variáveis (caso for usar outra porta, remova o "#" do server.port e defina a porta):
+ ```sh
+#server.port=${8081}
+jwt.secret=SauloIvoOliveiraTavaresGITHUBsauloiot
+jwt.expiration=3600000
+```
+
  ### Gerando a build do projeto
  A opção a seguir por em quanto está funcionando apenas no perfil de test devido a autenticação da API que bloqueia alguns endpoints rest, na proxima versão funcionará no dev e prod.
   ```sh
