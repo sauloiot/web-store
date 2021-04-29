@@ -10,8 +10,13 @@
  
  ![Modelo Conceitual](https://github.com/sauloiot/assets/blob/main/web-store-api-v1/modelo%20banco%20conceitual.png)
  
- # Tecnologias Utilizadas
- Java 11 e Spring Boot 2.4
+ # Tecnologias e Ferramentas Utilizadas
+ - Java 11  
+ - Spring Boot 2.4
+ - IntelliJ IDEA
+ - Postman
+ - SmartGit
+ - BrModelo
  
  # Como Executar 
  ### Requisitos:
@@ -34,7 +39,7 @@ do arquivo
  ```sh
 application.properties
 ```
-Para executar os testes é necessario alterar 
+### Para executar os testes é necessario alterar 
  ```sh
 spring.profiles.active=dev
 ```
@@ -42,13 +47,25 @@ para
  ```sh
 spring.profiles.active=test
 ```
-e executar os testes na pasta src/test/java. 
+e executar os testes na pasta src/test/java ou executar a linha: 
+ ```sh
+mvnw test
+```
+
 ### Para executar o projeto em produção
-É necessario acessar o arquivo:
+altere
+ ```sh
+spring.profiles.active=dev
+```
+para
+ ```sh
+spring.profiles.active=prod
+```
+em seguida acesse o arquivo:
  ```sh
 application-prod.properties
 ```
-e alterar a url do banco e a senha do banco
+e altere a url do banco e a senha do banco
  ```sh
 spring.datasource.url=jdbc:postgresql://URL_DO_BANCO
 spring.datasource.password=SENHA_DO_BANCO
