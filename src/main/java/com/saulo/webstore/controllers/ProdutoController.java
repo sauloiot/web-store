@@ -9,6 +9,7 @@ import com.saulo.webstore.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -31,7 +32,7 @@ public class ProdutoController {
         return ResponseEntity.ok().body(dto);
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> insert(@RequestBody ProdutoInsertDTO dto){
 
@@ -53,6 +54,7 @@ public class ProdutoController {
         return ResponseEntity.ok().body(list);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@Valid @RequestBody ProdutoInsertDTO dto, @PathVariable Integer id ){
         Produto obj = ProdutoInsertDTOConverter.dtoToEntity(dto);
@@ -62,6 +64,7 @@ public class ProdutoController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         produtoService.deleteById(id);

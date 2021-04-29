@@ -8,6 +8,7 @@ import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -47,6 +48,7 @@ public class ContaController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping( method=RequestMethod.GET)
     public ResponseEntity<List<ContaNoPWDTO>> findAll() {
         List<Conta> list = contaService.findAll();
@@ -65,6 +67,7 @@ public class ContaController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         contaService.deleteById(id);
