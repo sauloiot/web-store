@@ -6,7 +6,7 @@
   A conta cadastrada pode ser do tipo ADMIN ou CLIENTE, ADMIN é responsável por alimentar a base de dados da API criando e alterando as categorias, produtos (ao criar um produto é gerado um código a partir de um pequeno método utilitário construído por mim que simula o código de produto nas lojas.) e cupons. É possível editar todos os itens, é possível adicionar desconto a um produto que será calculado no momento do pedido, também é possível criar cupons de desconto do tipo valor fixo ou porcentagem. Ao realizar um pedido, é possível escolher entre pagamento com boleto e pagamento com cartão, ao gerar o pedido, será disponibilizado seu resumo contendo todos os itens, seus preços, descontos, cupons, valor total, valor com 10% de desconto e etc.
  
  ## Links
- ### - [Postamn contendo todas as requisiçoes da API](https://documenter.getpostman.com/view/5414747/TzK2aDyU)
+ ### - [Postman contendo todas as requisiçoes da API](https://documenter.getpostman.com/view/5414747/TzK2aDyU)
  
  # Modelo Conceitual 
  ![Modelo Conceitual](https://github.com/sauloiot/assets/blob/main/web-store-api-v1/modelo%20banco%20conceitual.png)
