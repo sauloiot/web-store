@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -32,6 +33,9 @@ public class DbLoad implements CommandLineRunner {
     @Autowired
     CupomRepository cupomRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder pe;
+
 
 
     @Override
@@ -45,8 +49,8 @@ public class DbLoad implements CommandLineRunner {
         Produto produto3 = new Produto(null, "Mesa", 400.00, "Mesa grande", Utils.code5L7N(), 50.00,"imagemURL",  cat2);
         Produto produto4 = new Produto(null, "Cadeira", 250.00, "Cadeira de rodinhas", Utils.code5L7N(), 0.00,"imagemURL",  cat2);
 
-        Conta conta1 = new Conta(null, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN);
-        Conta conta2 = new Conta(null, "Cliente", "cliente@hotmail.com", "0123456", TipoConta.CLIENTE);
+        Conta conta1 = new Conta(null, "Administrador", "adm@hotmail.com", pe.encode("0123456"), TipoConta.ADMIN);
+        Conta conta2 = new Conta(null, "Cliente", "cliente@hotmail.com", pe.encode("0123456"), TipoConta.CLIENTE);
 
         cat1.getProdutos().addAll(Arrays.asList(produto1, produto2));
         cat2.getProdutos().addAll(Arrays.asList(produto3, produto4));

@@ -8,6 +8,7 @@ import com.saulo.webstore.models.Conta;
 import com.saulo.webstore.services.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -22,6 +23,9 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
+   @Autowired
+    private BCryptPasswordEncoder pe;
+
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<ContaNoPWDTO> findById(@PathVariable Integer id) {
         Conta obj = contaService.findById(id);
@@ -33,6 +37,7 @@ public class ContaController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@Valid @RequestBody ContaDTO dto){
         Conta obj = ContaDTOConverter.dtoToEntity(dto);
+        obj.setSenha(pe.encode(obj.getSenha()));
         obj = contaService.insert(obj);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -52,6 +57,9 @@ public class ContaController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@Valid @RequestBody Conta obj, @PathVariable Integer id ){
         obj.setId(id);
+        if (obj.getSenha() != null){
+            obj.setSenha(pe.encode(obj.getSenha()));
+        }
         obj = contaService.update(obj);
         return ResponseEntity.noContent().build();
 
