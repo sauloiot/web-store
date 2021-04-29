@@ -66,4 +66,8 @@ public class UserSS implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean hasRole(TipoConta tipoConta) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(tipoConta.getDescricao()));
+    }
 }

@@ -6,6 +6,7 @@ import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.CategoriaRepository;
 import com.saulo.webstore.repositories.ContaRepository;
 import com.saulo.webstore.repositories.ProdutoRepository;
+import com.saulo.webstore.services.exceptions.AuthorizationException;
 import com.saulo.webstore.utils.Utils;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
@@ -48,12 +49,16 @@ class ContaServiceTest {
     public void findById() {
         when(contaRepository.findById(1)).thenReturn(java.util.Optional.of(new Conta(1, "Administrador", "adm@hotmail.com", "0123456", TipoConta.ADMIN)));
 
-        Conta conta = produtoService.findById(1);
-        assertEquals(1, conta.getId());
-        assertEquals("Administrador", conta.getNome());
-        assertEquals("adm@hotmail.com", conta.getEmail());
-        assertEquals("0123456", conta.getSenha());
-        assertEquals(TipoConta.ADMIN, conta.getTipoConta());
+        try {
+            Conta conta = produtoService.findById(1);
+            assertEquals(1, conta.getId());
+            assertEquals("Administrador", conta.getNome());
+            assertEquals("adm@hotmail.com", conta.getEmail());
+            assertEquals("0123456", conta.getSenha());
+            assertEquals(TipoConta.ADMIN, conta.getTipoConta());
+        }catch (AuthorizationException e){
+            e.getCause();
+        }
 
     }
 

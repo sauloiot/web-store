@@ -1,7 +1,10 @@
 package com.saulo.webstore.services;
 
 import com.saulo.webstore.models.Conta;
+import com.saulo.webstore.models.enums.TipoConta;
 import com.saulo.webstore.repositories.ContaRepository;
+import com.saulo.webstore.security.UserSS;
+import com.saulo.webstore.services.exceptions.AuthorizationException;
 import com.saulo.webstore.services.exceptions.DataIntegrityException;
 import com.saulo.webstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,11 @@ public class ContaService {
     private ContaRepository contaRepository;
 
     public Conta findById(Integer id) {
+        UserSS user = UserService.authenticated();
+        if (user==null || !user.hasRole(TipoConta.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Conta> obj = contaRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Conta.class.getSimpleName()));
