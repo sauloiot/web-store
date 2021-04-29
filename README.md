@@ -8,6 +8,7 @@
  ## Links
  ### - [Postamn contendo todas as requisiçoes da API](https://documenter.getpostman.com/view/5414747/TzK2aDyU)
  
+ # Modelo Conceitual 
  ![Modelo Conceitual](https://github.com/sauloiot/assets/blob/main/web-store-api-v1/modelo%20banco%20conceitual.png)
  
  # Tecnologias e Ferramentas Utilizadas
@@ -17,6 +18,8 @@
  - Postman
  - SmartGit
  - BrModelo
+ - H2 databse
+ - PostgreSQL
  
  # Como Executar 
  ### Requisitos:
@@ -30,7 +33,7 @@ mvnw spring-boot:run
  Ou pode abrir o projeto em uma IDE e executar o arquivo "WebStoreApplication" em src/main/java/com/saulo/webstore/WebStoreApplication.java.
  
 #### O projeto possui 3 perfis: test, prod e dev. 
-Por padrão o perfil inicial é o dev, para alternar é necessario alterar a linha
+Por padrão o perfil inicial é o dev, o perfil dev pode rodar com H2 databse que é um banco de dados em memoria ou PostgreSQL, o perfil test roda em H2 e o prod roda com PostgreSQL, para alternar é necessario alterar a linha
  ```sh
 spring.profiles.active
 
