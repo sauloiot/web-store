@@ -33,10 +33,9 @@ mvnw spring-boot:run
  Ou pode abrir o projeto em uma IDE e executar o arquivo "WebStoreApplication" em src/main/java/com/saulo/webstore/WebStoreApplication.java.
  
 #### O projeto possui 3 perfis: test, prod e dev. 
-Por padrão o perfil inicial é o dev, o perfil dev pode rodar com H2 databse que é um banco de dados em memoria ou PostgreSQL, o perfil test roda em H2 e o prod roda com PostgreSQL, para alternar é necessario alterar a linha
+Por padrão o perfil inicial é o dev, o perfil dev pode rodar com H2 databse que é um banco de dados em memoria ou PostgreSQL, basta alternar entre os trechos de codigos comentados dentro do arquivo "application-dev.properties", o perfil test roda em H2 e o prod roda com PostgreSQL, para alternar é necessario alterar a linha
  ```sh
 spring.profiles.active
-
 ```
 do arquivo 
  ```sh
@@ -78,8 +77,18 @@ spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=false
 spring.jpa.properties.hibernate.format_sql=false
 ```
- 
- 
+ ### Gerando a build do projeto
+ A opção a seguir por em quanto está funcionando apenas no perfil de test devido a autenticação da API que bloqueia alguns endpoints rest, na proxima versão funcionará no dev e prod.
+  ```sh
+ mvnw clean package spring-boot:repackage
+ java -jar target/web-store-0.0.1-SNAPSHOT.jar
+```
+opção para gerar o build em dev e prod (será substituido pela opção anterior).
+  ```sh
+ mvnw clean package -Dmaven.test.failure.ignore=true spring-boot:repackage
+ java -jar target/web-store-0.0.1-SNAPSHOT.jar
+```
+
  # Autor
  Saulo Ivo Oliveira Tavares
  
