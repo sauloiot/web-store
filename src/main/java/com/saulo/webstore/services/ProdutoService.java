@@ -1,5 +1,6 @@
 package com.saulo.webstore.services;
 
+import com.saulo.webstore.models.Cupom;
 import com.saulo.webstore.models.Produto;
 import com.saulo.webstore.repositories.ProdutoRepository;
 import com.saulo.webstore.services.exceptions.DataIntegrityException;
@@ -53,5 +54,17 @@ public class ProdutoService {
         }catch (DataIntegrityViolationException e){
             throw new DataIntegrityException("Não é possível excluir este produto, ele está associado a pedidos!");
         }
+    }
+
+    public Produto findByCodigo(String codigo){
+
+        Produto obj = produtoRepository.findByCodigo(codigo);
+        if (obj == null){
+            throw new ObjectNotFoundException(
+                    "Produto não encontrado! Código do produto: " + codigo + ", Tipo: " + Produto.class.getSimpleName());
+        }
+        return obj;
+
+
     }
 }

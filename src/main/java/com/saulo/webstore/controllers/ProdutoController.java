@@ -4,6 +4,7 @@ import com.saulo.webstore.dtos.ProdutoDTO;
 import com.saulo.webstore.dtos.ProdutoInsertDTO;
 import com.saulo.webstore.dtos.converter.ProdutoDTOConverter;
 import com.saulo.webstore.dtos.converter.ProdutoInsertDTOConverter;
+import com.saulo.webstore.models.Cupom;
 import com.saulo.webstore.models.Produto;
 import com.saulo.webstore.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,13 @@ public class ProdutoController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         produtoService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/codigo/{codigo}", method=RequestMethod.GET)
+    public ResponseEntity<Produto> findByCodigo(@PathVariable String codigo) {
+        Produto obj = produtoService.findByCodigo(codigo);
+
+        return ResponseEntity.ok().body(obj);
     }
 
 }
