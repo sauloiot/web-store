@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @SpringBootApplication
-@EnableWebSecurity
+//@EnableWebSecurity
 //@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 public class WebStoreApplication {
 
